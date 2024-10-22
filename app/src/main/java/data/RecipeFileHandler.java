@@ -48,8 +48,13 @@ public class RecipeFileHandler {
                         System.out.println("Recipe Name: " + pairs[0]);
                         System.out.print("Main Ingredients: ");
                         for(int j = 1; j < pairs.length; j++) {
-                            // 残りを順番に
-                            System.out.print(pairs[j]);
+                            // 残りを順番に出力
+                            if (j == pairs.length - 1) {
+                                // 最後の一個になった時はカンマをつけない
+                                System.out.print(pairs[j]);
+                            } else {
+                                System.out.print(pairs[j] + ",");
+                            }
                         }
                         System.out.println();
                 }

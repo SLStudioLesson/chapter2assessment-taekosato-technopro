@@ -1,6 +1,12 @@
 package data;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class RecipeFileHandler {
@@ -22,11 +28,37 @@ public class RecipeFileHandler {
      * @return レシピデータ
      */
     public ArrayList<String> readRecipes() {
-        // try {
+        File dataFile = new File(filePath);
+        // ファイルを読み込む
+        if (dataFile.length() == 0 && dataFile.exists()) {
+            // ファイルが空の時
+            System.out.println("No recipes available.");
+        } else {
+            // ファイルの中身があるとき
+            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                String line;
+                System.out.println(); // 改行
+                System.out.println("Recipes:");
+                while ((line = reader.readLine()) != null) {
+                    // カンマで分ける
+                    String[] pairs = line.split(",");
+                    // for (int i = 0; i < pairs.length; i++) {
+                        // 最初だけ出力
+                        System.out.println("-----------------------------------");
+                        System.out.println("Recipe Name: " + pairs[0]);
+                        System.out.print("Main Ingredients: ");
+                        for(int j = 1; j < pairs.length; j++) {
+                            // 残りを順番に
+                            System.out.print(pairs[j]);
+                        }
+                        System.out.println();
+                    // }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-        // } catch (IOException e) {
-        //     System.out.println("Error reading file:" + e.getMessage());
-        // }
         return null;
     }
 
@@ -40,10 +72,30 @@ public class RecipeFileHandler {
      */
      // 
     public void addRecipe(String recipeName, String ingredients) {
-        // try {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        // } catch (IOException e) {
+        System.out.print("Enter recipe name: ");
+        String inputName = reader.readLine();
 
-        // }
+        System.out.print("Enter main ingredients (comma separated): ");
+        String inputIngredient = reader.readLine();
+
+        // inputIngredientsを配列にする
+        String[] inuputIngredients = inputIngredient.split(",");
+
+        // ファイルの書き込み
+        String writeString = "";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(inputName + writeString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Recipe added successfully.");
+    }
+    public String writeString() {
+        for (String food : inuputIngredients) {
+            system.out.print("," + food);
+        }
     }
 }

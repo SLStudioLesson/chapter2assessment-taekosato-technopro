@@ -1,6 +1,9 @@
 package ui;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,9 +40,11 @@ public class RecipeUI {
                 switch (choice) {
                     case "1":
                         // 設問1: 一覧表示機能
+                        displayRecipes();
                         break;
                     case "2":
                         // 設問2: 新規登録機能
+                        addNewRecipe();
                         break;
                     case "3":
                         // 設問3: 検索機能
@@ -62,6 +67,9 @@ public class RecipeUI {
      * RecipeFileHandlerから読み込んだレシピデータを整形してコンソールに表示します。
      */
     private void displayRecipes() {
+        // データを呼び出す
+        RecipeFileHandler recipeFile = new RecipeFileHandler();
+        recipeFile.readRecipes();
 
     }
 
@@ -72,7 +80,20 @@ public class RecipeUI {
      * @throws java.io.IOException 入出力が受け付けられない
      */
     private void addNewRecipe() throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
+        System.out.print("Enter recipe name:");
+        String inputName = reader.readLine();
+
+        System.out.print("Enter main ingredients (comma separated):");
+        String inputIngredient = reader.readLine();
+
+        // inputIngredientsを配列にする
+        String[] inuputIngredients = inputIngredient.split(",");
+
+        RecipeFileHandler addRecipe = new RecipeFileHandler();
+        // ユーザーの入力を引数にする
+        addRecipe.addRecipe(inputName, inputIngredient);
     }
 
     /**

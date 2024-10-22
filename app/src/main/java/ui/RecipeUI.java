@@ -81,15 +81,12 @@ public class RecipeUI {
      */
     private void addNewRecipe() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
+        // 入力を受け付ける
         System.out.print("Enter recipe name:");
         String inputName = reader.readLine();
 
         System.out.print("Enter main ingredients (comma separated):");
         String inputIngredient = reader.readLine();
-
-        // inputIngredientsを配列にする
-        String[] inuputIngredients = inputIngredient.split(",");
 
         RecipeFileHandler addRecipe = new RecipeFileHandler();
         // ユーザーの入力を引数にする

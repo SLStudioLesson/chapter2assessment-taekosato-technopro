@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RecipeFileHandler {
     private String filePath;
@@ -42,8 +43,7 @@ public class RecipeFileHandler {
                 while ((line = reader.readLine()) != null) {
                     // カンマで分ける
                     String[] pairs = line.split(",");
-                    // for (int i = 0; i < pairs.length; i++) {
-                        // 最初だけ出力
+                        // 配列の一番目(名前)だけ出力
                         System.out.println("-----------------------------------");
                         System.out.println("Recipe Name: " + pairs[0]);
                         System.out.print("Main Ingredients: ");
@@ -52,7 +52,6 @@ public class RecipeFileHandler {
                             System.out.print(pairs[j]);
                         }
                         System.out.println();
-                    // }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -72,30 +71,17 @@ public class RecipeFileHandler {
      */
      // 
     public void addRecipe(String recipeName, String ingredients) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-        System.out.print("Enter recipe name: ");
-        String inputName = reader.readLine();
-
-        System.out.print("Enter main ingredients (comma separated): ");
-        String inputIngredient = reader.readLine();
-
         // inputIngredientsを配列にする
-        String[] inuputIngredients = inputIngredient.split(",");
+        String[] inuputIngredients = ingredients.split(",");
 
-        // ファイルの書き込み
-        String writeString = "";
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write(inputName + writeString());
+        // ファイルへの書き込み
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+            writer.write(recipeName + ", " + String.join(", ", inuputIngredients));
+            writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        // 終わり
         System.out.println("Recipe added successfully.");
-    }
-    public String writeString() {
-        for (String food : inuputIngredients) {
-            system.out.print("," + food);
-        }
     }
 }
